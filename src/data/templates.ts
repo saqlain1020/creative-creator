@@ -1,5 +1,7 @@
 import type { TemplateMeta } from '../types'
 import { newTemplates } from './newTemplates'
+import { starThemeTemplates } from './starThemeTemplates'
+import { wave2Templates } from './wave2Templates'
 
 const classicTemplates: TemplateMeta[] = [
   {
@@ -116,7 +118,12 @@ const classicTemplates: TemplateMeta[] = [
   },
 ]
 
-export const templates: TemplateMeta[] = [...classicTemplates, ...newTemplates]
+export const templates: TemplateMeta[] = [
+  ...classicTemplates,
+  ...newTemplates,
+  ...wave2Templates,
+  ...starThemeTemplates,
+]
 
 export function getTemplate(id: string): TemplateMeta {
   return templates.find((t) => t.id === id) ?? templates[0]

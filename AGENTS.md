@@ -24,14 +24,17 @@ Stack: React 19, TypeScript, Vite 8, `html-to-image` for export. No router, no s
 | Path | Role |
 |------|------|
 | `src/types.ts` | `TemplateId`, `CreativeContent`, `CreativeColors`, `TemplateMeta` |
-| `src/data/templates.ts` | Classic templates + merges `newTemplates` |
-| `src/data/newTemplates.ts` | Extra imaginative templates |
+| `src/data/templates.ts` | Classic templates + merges `newTemplates` + `wave2Templates` |
+| `src/data/newTemplates.ts` | Extra imaginative templates (batch 1) |
+| `src/data/wave2Templates.ts` | Extra imaginative templates (batch 2) |
+| `src/data/starThemeTemplates.ts` | Stars / constellation-themed templates |
 | `src/data/templateFields.ts` | **Per-template editor fields + colors** (what the form shows) |
 | `src/components/templates/registry.tsx` | Maps `TemplateId` → component |
 | `src/components/templates/*.tsx` | Classic layouts |
 | `src/components/templates/extras/*.tsx` | Newer layouts |
 | `src/components/templates/templates.css` | Classic layout CSS |
-| `src/components/templates/extras/extras.css` | Extra layout CSS |
+| `src/components/templates/extras/extras.css` | Extra layout CSS (batch 1) |
+| `src/components/templates/extras/wave2.css` | Extra layout CSS (batch 2) |
 | `src/components/CreativeCanvas.tsx` | Scaled 1080 artboard + export target |
 | `src/components/EditorForm.tsx` | Uploads + fields driven by `templateFieldConfig` |
 | `src/components/TemplatePicker.tsx` | Compact template grid |

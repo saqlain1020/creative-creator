@@ -13,6 +13,19 @@ export type TemplateId =
   | 'polaroid-memory'
   | 'film-strip'
   | 'mosaic-burst'
+  | 'vinyl-sleeve'
+  | 'constellation'
+  | 'tarot-arcana'
+  | 'brutal-block'
+  | 'silk-ribbon'
+  | 'halftone-pop'
+  | 'zen-ink'
+  | 'passport-stamp'
+  | 'billboard-night'
+  | 'watercolor-wash'
+  | 'lunar-phase'
+  | 'zodiac-wheel'
+  | 'meteor-shower'
 
 export type CreativeColors = {
   background: string

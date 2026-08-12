@@ -3,6 +3,8 @@ import type { CreativeContent, TemplateId } from '../types'
 import { renderTemplate } from './templates/registry'
 import './templates/templates.css'
 import './templates/extras/extras.css'
+import './templates/extras/wave2.css'
+import './templates/extras/starTheme.css'
 
 type Props = {
   templateId: TemplateId
