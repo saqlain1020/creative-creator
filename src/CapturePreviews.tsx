@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
-import { toPng } from 'html-to-image'
 import { templates } from './data/templates'
 import type { TemplateMeta } from './types'
 import { renderTemplate } from './components/templates/registry'
+import { artboardToPngDataUrl } from './utils/exportCreative'
 import './components/templates/templates.css'
 import './components/templates/extras/extras.css'
 import './components/templates/extras/wave2.css'
@@ -65,11 +65,7 @@ export function CapturePreviews() {
           if (!node) throw new Error('Artboard missing')
           await waitForImages(node)
           await new Promise((resolve) => setTimeout(resolve, 250))
-          const dataUrl = await toPng(node, {
-            cacheBust: true,
-            pixelRatio: 0.5,
-            backgroundColor: undefined,
-          })
+          const dataUrl = await artboardToPngDataUrl(node, 0.5)
           const res = await fetch('/__save-preview', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

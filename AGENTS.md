@@ -40,6 +40,7 @@ Stack: React 19, TypeScript, Vite 8, `html-to-image` for export. No router, no s
 | `src/components/TemplatePicker.tsx` | Compact grid; thumbs are captured PNGs |
 | `src/App.tsx` | State: `templateId`, `content`; preserve user uploads on switch |
 | `src/utils/exportCreative.ts` | PNG export via `html-to-image` |
+| `src/utils/embedFonts.ts` | Inline Google Fonts as data URLs for export |
 | `src/utils/templateQuery.ts` | Read/write `?template=` in the URL |
 | `src/utils/colorTone.ts` | `isLightColor()` for white vs black overlays |
 | `src/CapturePreviews.tsx` | Dev-only PNG capture of every template |
@@ -167,9 +168,10 @@ When changing chrome CSS, preserve this split-scroll behavior — don’t put pi
 ## Export
 
 - Target: `.canvas-panel__artboard` (unscaled).
-- `pixelRatio: 2` in `exportCreative.ts`.
+- `pixelRatio: 2` in `exportCreative.ts` (`artboardToPngDataUrl`).
 - Cross-origin images can break export; prefer `/public` samples or data URLs from uploads.
-- Google Fonts stylesheets can throw a `cssRules` SecurityError while `html-to-image` inlines CSS — fonts still usually render. Prefer `document.fonts.ready` / `document.fonts.load()` before capture.
+- Google Fonts stylesheets are cross-origin, so `html-to-image` cannot read `@font-face` from `document.styleSheets` and the PNG falls back to Times/Arial/cursive. **Fix:** `src/utils/embedFonts.ts` fetches the Google CSS, inlines used `woff2` files as data URLs, and passes `fontEmbedCSS` into `toPng`. First export per session may be a second slower while fonts download.
+- Wait for `document.fonts.ready` before capture/export. Do not set `skipFonts: true`.
 
 ## Quality bar before finishing a task
 
@@ -203,6 +205,7 @@ When changing chrome CSS, preserve this split-scroll behavior — don’t put pi
 | Fix overlap / spacing | that template’s CSS (`templates.css`, `extras.css`, or `wave2.css`) |
 | Change app chrome / sidebar | `App.css`, maybe `App.tsx` / picker / editor |
 | Change export quality | `utils/exportCreative.ts` |
+| Export font mismatch | `utils/embedFonts.ts` (inline Google Fonts into PNG) |
 | Default sample photos | `public/samples/` + template `defaults.productImageUrl` |
 | Default watermark logo | `public/logos/` + template `defaults.logoUrl` |
 | Shareable template URL | automatic via `templateQuery.ts` once `TemplateId` exists |
