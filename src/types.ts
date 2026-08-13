@@ -26,6 +26,7 @@ export type TemplateId =
   | 'lunar-phase'
   | 'zodiac-wheel'
   | 'meteor-shower'
+  | 'logo-watermark'
 
 export type CreativeColors = {
   background: string

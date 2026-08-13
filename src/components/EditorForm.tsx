@@ -67,9 +67,11 @@ export function EditorForm({ templateId, content, onChange }: Props) {
               <img src={content.logoUrl} alt="Logo preview" />
             ) : (
               <em>
-                {config.logoReplacesBrand
-                  ? 'Optional — replaces brand text'
-                  : 'Optional brand mark'}
+                {config.logoHint
+                  ? config.logoHint
+                  : config.logoReplacesBrand
+                    ? 'Optional — replaces brand text'
+                    : 'Optional brand mark'}
               </em>
             )}
             {content.logoUrl ? (
@@ -140,17 +142,45 @@ export function EditorForm({ templateId, content, onChange }: Props) {
       <div className="editor__colors">
         <h3>Colors</h3>
         <div className="editor__color-grid">
-          {config.colors.map((field) => (
-            <label key={field.key} className="color-field">
-              <span>{field.label}</span>
-              <input
-                type="color"
-                value={content.colors[field.key]}
-                onChange={(e) => updateColor(field.key, e.target.value)}
-              />
-              <code>{content.colors[field.key]}</code>
-            </label>
-          ))}
+          {config.colors.map((field) =>
+            field.swatches ? (
+              <div key={field.key} className="color-field color-field--tones">
+                <span>{field.label}</span>
+                <div className="tone-toggle">
+                  {field.swatches.map((swatch) => {
+                    const active =
+                      content.colors[field.key].toLowerCase() ===
+                      swatch.value.toLowerCase()
+                    return (
+                      <button
+                        key={swatch.value}
+                        type="button"
+                        className={`tone-toggle__btn${active ? ' is-active' : ''}`}
+                        onClick={() => updateColor(field.key, swatch.value)}
+                      >
+                        <i
+                          className="tone-toggle__swatch"
+                          style={{ background: swatch.value }}
+                          aria-hidden
+                        />
+                        {swatch.label}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            ) : (
+              <label key={field.key} className="color-field">
+                <span>{field.label}</span>
+                <input
+                  type="color"
+                  value={content.colors[field.key]}
+                  onChange={(e) => updateColor(field.key, e.target.value)}
+                />
+                <code>{content.colors[field.key]}</code>
+              </label>
+            ),
+          )}
         </div>
       </div>
     </section>

@@ -9,6 +9,7 @@ import { Constellation } from './extras/Constellation'
 import { DiagonalCut } from './extras/DiagonalCut'
 import { FilmStrip } from './extras/FilmStrip'
 import { HalftonePop } from './extras/HalftonePop'
+import { LogoWatermark } from './extras/LogoWatermark'
 import { LunarPhase } from './extras/LunarPhase'
 import { MagazineCover } from './extras/MagazineCover'
 import { MeteorShower } from './extras/MeteorShower'
@@ -85,6 +86,8 @@ export function renderTemplate(
       return <ZodiacWheel content={content} />
     case 'meteor-shower':
       return <MeteorShower content={content} />
+    case 'logo-watermark':
+      return <LogoWatermark content={content} />
     case 'split-editorial':
     default:
       return <SplitEditorial content={content} />

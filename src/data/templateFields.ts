@@ -19,11 +19,23 @@ export type FieldConfig = {
   multiline?: boolean
 }
 
+export type ColorSwatch = {
+  label: string
+  value: string
+}
+
+export type ColorFieldConfig = {
+  key: keyof CreativeColors
+  label: string
+  swatches?: ColorSwatch[]
+}
+
 export type TemplateFieldConfig = {
   fields: FieldConfig[]
-  colors: { key: keyof CreativeColors; label: string }[]
+  colors: ColorFieldConfig[]
   showLogo: boolean
   logoReplacesBrand?: boolean
+  logoHint?: string
 }
 
 const brandFields: FieldConfig[] = [
@@ -512,6 +524,21 @@ export const templateFieldConfig: Record<TemplateId, TemplateFieldConfig> = {
       { key: 'text', label: 'Text' },
       { key: 'muted', label: 'Secondary' },
       { key: 'surface', label: 'Panel' },
+    ],
+  },
+  'logo-watermark': {
+    showLogo: true,
+    logoHint: 'Used as the watermark on your photo',
+    fields: [webField],
+    colors: [
+      {
+        key: 'text',
+        label: 'Watermark & website',
+        swatches: [
+          { label: 'White', value: '#ffffff' },
+          { label: 'Black', value: '#000000' },
+        ],
+      },
     ],
   },
 }
