@@ -118,12 +118,19 @@ const classicTemplates: TemplateMeta[] = [
   },
 ]
 
+export function templatePreviewPath(id: string) {
+  return `/templates/preview-${id}.png`
+}
+
 export const templates: TemplateMeta[] = [
   ...classicTemplates,
   ...newTemplates,
   ...wave2Templates,
   ...starThemeTemplates,
-]
+].map((template) => ({
+  ...template,
+  preview: templatePreviewPath(template.id),
+}))
 
 export function getTemplate(id: string): TemplateMeta {
   return templates.find((t) => t.id === id) ?? templates[0]

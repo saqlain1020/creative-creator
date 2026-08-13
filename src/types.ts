@@ -27,6 +27,7 @@ export type TemplateId =
   | 'zodiac-wheel'
   | 'meteor-shower'
   | 'logo-watermark'
+  | 'script-overlay'
 
 export type CreativeColors = {
   background: string

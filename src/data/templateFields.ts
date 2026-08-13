@@ -541,4 +541,23 @@ export const templateFieldConfig: Record<TemplateId, TemplateFieldConfig> = {
       },
     ],
   },
+  'script-overlay': {
+    showLogo: false,
+    fields: [
+      { key: 'headline', label: 'Script line' },
+      { key: 'subheadline', label: 'Caps line' },
+      { key: 'bodyText', label: 'Bottom line', multiline: true },
+      webField,
+    ],
+    colors: [
+      {
+        key: 'text',
+        label: 'Text',
+        swatches: [
+          { label: 'White', value: '#ffffff' },
+          { label: 'Black', value: '#000000' },
+        ],
+      },
+    ],
+  },
 }

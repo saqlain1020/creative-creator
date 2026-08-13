@@ -18,6 +18,7 @@ import { NoirSpotlight } from './extras/NoirSpotlight'
 import { OrbitCircle } from './extras/OrbitCircle'
 import { PassportStamp } from './extras/PassportStamp'
 import { PolaroidMemory } from './extras/PolaroidMemory'
+import { ScriptOverlay } from './extras/ScriptOverlay'
 import { SilkRibbon } from './extras/SilkRibbon'
 import { TarotArcana } from './extras/TarotArcana'
 import { TicketStub } from './extras/TicketStub'
@@ -88,6 +89,8 @@ export function renderTemplate(
       return <MeteorShower content={content} />
     case 'logo-watermark':
       return <LogoWatermark content={content} />
+    case 'script-overlay':
+      return <ScriptOverlay content={content} />
     case 'split-editorial':
     default:
       return <SplitEditorial content={content} />

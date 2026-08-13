@@ -1,0 +1,25 @@
+html:has(.capture-page),
+body:has(.capture-page) {
+  overflow: auto;
+}
+
+.capture-page {
+  min-height: 100%;
+  overflow: auto;
+  padding: 16px;
+  background: #1c1712;
+  color: #f7f1e8;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.capture-page__status {
+  margin: 0 0 12px;
+  font-size: 14px;
+}
+
+.capture-page__artboard {
+  width: 1080px;
+  height: 1080px;
+  position: relative;
+  background: #fff;
+}

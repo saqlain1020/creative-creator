@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react'
 import type { TemplateId, TemplateMeta } from '../types'
 
 type Props = {
@@ -6,13 +5,6 @@ type Props = {
   activeId: TemplateId
   onSelect: (id: TemplateId) => void
 }
-
-const classicPreviews = new Set([
-  'split-editorial',
-  'centered-collection',
-  'peach-editorial',
-  'curve-showcase',
-])
 
 export function TemplatePicker({ templates, activeId, onSelect }: Props) {
   return (
@@ -24,13 +16,6 @@ export function TemplatePicker({ templates, activeId, onSelect }: Props) {
       <div className="picker__grid">
         {templates.map((template) => {
           const active = template.id === activeId
-          const c = template.defaults.colors
-          const thumbStyle = {
-            '--thumb-bg': c.background,
-            '--thumb-accent': c.accent,
-            '--thumb-surface': c.surface,
-            '--thumb-text': c.text,
-          } as CSSProperties
 
           return (
             <button
@@ -41,26 +26,8 @@ export function TemplatePicker({ templates, activeId, onSelect }: Props) {
               aria-pressed={active}
               title={template.description}
             >
-              <div
-                className={`picker__thumb picker__thumb--${template.id}`}
-                style={thumbStyle}
-              >
-                {classicPreviews.has(template.id) ? (
-                  <img src={template.preview} alt="" />
-                ) : (
-                  <>
-                    {template.defaults.productImageUrl ? (
-                      <img
-                        src={template.defaults.productImageUrl}
-                        alt=""
-                        className="picker__thumb-img"
-                      />
-                    ) : null}
-                    <span className="picker__thumb-label">
-                      {template.defaults.headline}
-                    </span>
-                  </>
-                )}
+              <div className="picker__thumb">
+                <img src={template.preview} alt="" />
               </div>
               <strong>{template.name}</strong>
             </button>
