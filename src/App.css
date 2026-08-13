@@ -147,7 +147,8 @@
 .picker__head h2,
 .editor__head h2,
 .canvas-panel__head h2,
-.editor__colors h3 {
+.editor__colors h3,
+.editor__adjust h3 {
   margin: 0;
   font-family: 'Playfair Display', serif;
   font-size: 1.1rem;
@@ -439,6 +440,124 @@
   border-radius: 50%;
   border: 1px solid rgba(17, 17, 17, 0.2);
   display: block;
+}
+
+.font-picker {
+  margin-top: 14px;
+  display: grid;
+  gap: 6px;
+}
+
+.font-picker > span {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+
+.font-picker__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.font-picker__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 68px;
+  padding: 8px 6px 6px;
+  border: 1px solid var(--line);
+  background: #fffdf9;
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.font-picker__btn.is-active {
+  border-color: var(--forest);
+  box-shadow: 0 0 0 1px var(--forest);
+}
+
+.font-picker__sample {
+  font-size: 28px;
+  line-height: 1.05;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.font-picker__name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+
+.choice-set {
+  margin-top: 14px;
+  display: grid;
+  gap: 6px;
+}
+
+.choice-set > span {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+
+.choice-set__row {
+  display: grid;
+  gap: 8px;
+}
+
+.editor__adjust {
+  margin-top: 16px;
+  display: grid;
+  gap: 4px;
+}
+
+.offset-picker {
+  margin-top: 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.offset-picker > span {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+
+.offset-picker__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.offset-picker input[type='range'] {
+  width: 100%;
+  accent-color: var(--forest);
+}
+
+.offset-picker__value {
+  font-style: normal;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  min-width: 3.4em;
+  text-align: right;
 }
 
 /* ——— Preview panel ——— */

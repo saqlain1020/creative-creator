@@ -1,4 +1,5 @@
-import type { CreativeColors, TemplateId } from '../types'
+import type { CreativeColors, CreativeLayout, TemplateId } from '../types'
+import { SCRIPT_FONTS } from './scriptFonts'
 
 export type ContentFieldKey =
   | 'brandPrefix'
@@ -30,12 +31,35 @@ export type ColorFieldConfig = {
   swatches?: ColorSwatch[]
 }
 
+export type FontChoiceConfig = {
+  key: ContentFieldKey
+  label: string
+  options: { label: string; family: string; opsz?: number; fallback?: string }[]
+}
+
+export type ChoiceSet = {
+  key: ContentFieldKey
+  label: string
+  options: { label: string; value: string }[]
+}
+
+export type LayoutControl = {
+  kind: 'size' | 'offsetY'
+  key: keyof CreativeLayout
+  label: string
+  min?: number
+  max?: number
+}
+
 export type TemplateFieldConfig = {
   fields: FieldConfig[]
   colors: ColorFieldConfig[]
   showLogo: boolean
   logoReplacesBrand?: boolean
   logoHint?: string
+  fontChoices?: FontChoiceConfig
+  choiceSets?: ChoiceSet[]
+  layoutControls?: LayoutControl[]
 }
 
 const brandFields: FieldConfig[] = [
@@ -543,9 +567,40 @@ export const templateFieldConfig: Record<TemplateId, TemplateFieldConfig> = {
   },
   'script-overlay': {
     showLogo: false,
+    fontChoices: {
+      key: 'sideText',
+      label: 'Script font',
+      options: SCRIPT_FONTS,
+    },
+    layoutControls: [
+      { kind: 'offsetY', key: 'headline', label: 'Script from top', min: 0 },
+      { kind: 'size', key: 'headline', label: 'Script size' },
+      { kind: 'size', key: 'subheadline', label: 'Second line size' },
+      { kind: 'size', key: 'bodyText', label: 'Bottom line size' },
+      { kind: 'size', key: 'website', label: 'Website size' },
+    ],
+    choiceSets: [
+      {
+        key: 'ctaText',
+        label: 'Aspect ratio',
+        options: [
+          { label: '1:1', value: '1:1' },
+          { label: '4:5', value: '4:5' },
+        ],
+      },
+      {
+        key: 'brandTagline',
+        label: 'Alignment',
+        options: [
+          { label: 'Left', value: 'left' },
+          { label: 'Center', value: 'center' },
+          { label: 'Right', value: 'right' },
+        ],
+      },
+    ],
     fields: [
-      { key: 'headline', label: 'Script line' },
-      { key: 'subheadline', label: 'Caps line' },
+      { key: 'headline', label: 'Script line', multiline: true },
+      { key: 'subheadline', label: 'Second line', multiline: true },
       { key: 'bodyText', label: 'Bottom line', multiline: true },
       webField,
     ],

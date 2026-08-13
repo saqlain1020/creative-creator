@@ -52,7 +52,32 @@ export type CreativeContent = {
   logoUrl: string | null
   productImageUrl: string | null
   colors: CreativeColors
+  layout?: CreativeLayout
 }
+
+export type SizeToken = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+
+export type FieldTune = {
+  size?: SizeToken
+  offsetY?: number
+}
+
+export type CreativeLayout = Partial<
+  Record<
+    | 'brandPrefix'
+    | 'brandName'
+    | 'brandTagline'
+    | 'headline'
+    | 'subheadline'
+    | 'accentLine'
+    | 'bodyTitle'
+    | 'bodyText'
+    | 'ctaText'
+    | 'website'
+    | 'sideText',
+    FieldTune
+  >
+>
 
 export type TemplateMeta = {
   id: TemplateId

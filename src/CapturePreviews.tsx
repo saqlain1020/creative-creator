@@ -4,6 +4,7 @@ import { templates } from './data/templates'
 import type { TemplateMeta } from './types'
 import { renderTemplate } from './components/templates/registry'
 import { artboardToPngDataUrl } from './utils/exportCreative'
+import { getArtboardSize } from './utils/artboardSize'
 import './components/templates/templates.css'
 import './components/templates/extras/extras.css'
 import './components/templates/extras/wave2.css'
@@ -27,6 +28,12 @@ async function waitForImages(root: HTMLElement) {
   await document.fonts.ready
   await Promise.allSettled(
     [
+      'Ballet',
+      'Bodoni Moda',
+      'Fleur De Leah',
+      'Lavishly Yours',
+      'Miss Fajardose',
+      'Rouge Script',
       'The Nautigal',
       'Great Vibes',
       'Cormorant Garamond',
@@ -91,10 +98,18 @@ export function CapturePreviews() {
     }
   }, [])
 
+  const size = current
+    ? getArtboardSize(current.id, current.defaults)
+    : { width: 1080, height: 1080 }
+
   return (
     <div className="capture-page" data-capture-status={phase} data-capture-message={status}>
       <p className="capture-page__status">{status}</p>
-      <div ref={nodeRef} className="capture-page__artboard">
+      <div
+        ref={nodeRef}
+        className="capture-page__artboard"
+        style={{ width: size.width, height: size.height }}
+      >
         {current ? renderTemplate(current.id, current.defaults) : null}
       </div>
     </div>

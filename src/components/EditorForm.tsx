@@ -1,6 +1,16 @@
 import { useEffect, useRef, type ChangeEvent } from 'react'
+import { ChoiceRow, OffsetYPicker, SizePicker } from './editor'
+import { patchFieldTune } from '../data/fieldTune'
+import { scriptFontStack } from '../data/scriptFonts'
 import { templateFieldConfig } from '../data/templateFields'
-import type { CreativeColors, CreativeContent, TemplateId } from '../types'
+import type {
+  CreativeColors,
+  CreativeContent,
+  CreativeLayout,
+  FieldTune,
+  TemplateId,
+} from '../types'
+import { getArtboardSize } from '../utils/artboardSize'
 import { fileToDataUrl } from '../utils/fileToDataUrl'
 
 type Props = {
@@ -16,6 +26,7 @@ export function EditorForm({ templateId, content, onChange }: Props) {
     rootRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
   }, [templateId])
   const config = templateFieldConfig[templateId]
+  const fontChoices = config.fontChoices
 
   const visibleFields = config.fields.filter((field) => {
     if (!config.logoReplacesBrand || !content.logoUrl) return true
@@ -27,6 +38,13 @@ export function EditorForm({ templateId, content, onChange }: Props) {
     value: CreativeContent[K],
   ) {
     onChange({ ...content, [key]: value })
+  }
+
+  function updateLayout(key: keyof CreativeLayout, patch: FieldTune) {
+    onChange({
+      ...content,
+      layout: patchFieldTune(content.layout, key, patch),
+    })
   }
 
   function updateColor(key: keyof CreativeColors, value: string) {
@@ -138,6 +156,78 @@ export function EditorForm({ templateId, content, onChange }: Props) {
           </label>
         ))}
       </div>
+
+      {config.layoutControls?.length ? (
+        <div className="editor__adjust">
+          <h3>Adjust</h3>
+          {config.layoutControls.map((control) => {
+            if (control.kind === 'offsetY') {
+              const artH = getArtboardSize(templateId, content).height
+              const max = control.max ?? Math.max(240, artH - 160)
+              return (
+                <OffsetYPicker
+                  key={`${control.key}-y`}
+                  label={control.label}
+                  min={control.min ?? 0}
+                  max={max}
+                  value={content.layout?.[control.key]?.offsetY ?? 24}
+                  onChange={(offsetY) => updateLayout(control.key, { offsetY })}
+                />
+              )
+            }
+            return (
+              <SizePicker
+                key={`${control.key}-size`}
+                label={control.label}
+                value={content.layout?.[control.key]?.size}
+                onChange={(size) => updateLayout(control.key, { size })}
+              />
+            )
+          })}
+        </div>
+      ) : null}
+
+      {config.choiceSets?.map((set) => (
+        <ChoiceRow
+          key={set.key}
+          label={set.label}
+          value={content[set.key]}
+          options={set.options}
+          onChange={(value) => updateField(set.key, value)}
+        />
+      ))}
+
+      {fontChoices ? (
+        <div className="font-picker">
+          <span>{fontChoices.label}</span>
+          <div className="font-picker__grid">
+            {fontChoices.options.map((option) => {
+              const active = content[fontChoices.key] === option.family
+              return (
+                <button
+                  key={option.family}
+                  type="button"
+                  className={`font-picker__btn${active ? ' is-active' : ''}`}
+                  onClick={() => updateField(fontChoices.key, option.family)}
+                >
+                  <span
+                    className="font-picker__sample"
+                    style={{
+                      fontFamily: scriptFontStack(option),
+                      ...(option.opsz
+                        ? { fontVariationSettings: `"opsz" ${option.opsz}` }
+                        : {}),
+                    }}
+                  >
+                    New
+                  </span>
+                  <span className="font-picker__name">{option.label}</span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      ) : null}
 
       <div className="editor__colors">
         <h3>Colors</h3>
