@@ -5,18 +5,22 @@ import { TemplatePicker } from './components/TemplatePicker'
 import { getTemplate, templates } from './data/templates'
 import type { CreativeContent, TemplateId } from './types'
 import { exportCreativePng } from './utils/exportCreative'
+import { readTemplateQuery, writeTemplateQuery } from './utils/templateQuery'
 import './App.css'
 
 function App() {
-  const [templateId, setTemplateId] = useState<TemplateId>('split-editorial')
+  const [templateId, setTemplateId] = useState<TemplateId>(
+    () => readTemplateQuery() ?? 'split-editorial',
+  )
   const [content, setContent] = useState<CreativeContent>(
-    () => getTemplate('split-editorial').defaults,
+    () => getTemplate(templateId).defaults,
   )
   const [exporting, setExporting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const canvasRef = useRef<HTMLDivElement>(null)
 
   function handleSelectTemplate(id: TemplateId) {
+    writeTemplateQuery(id)
     setTemplateId(id)
     const defaults = getTemplate(id).defaults
     setContent({
