@@ -167,6 +167,16 @@ export const templateFieldConfig: Record<TemplateId, TemplateFieldConfig> = {
   },
   'noir-spotlight': {
     showLogo: true,
+    choiceSets: [
+      {
+        key: 'website',
+        label: 'Black overlay',
+        options: [
+          { label: 'On', value: 'on' },
+          { label: 'Off', value: 'off' },
+        ],
+      },
+    ],
     fields: fullStory,
     colors: [
       { key: 'background', label: 'Stage' },

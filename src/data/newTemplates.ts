@@ -30,6 +30,7 @@ export const newTemplates: TemplateMeta[] = [
       bodyTitle: 'LIMITED',
       bodyText: 'Evening edit — only 50 sets',
       sideText: 'AIZÉL NOIR',
+      website: 'on',
       colors: {
         background: '#0B0B0D',
         accent: '#D4B483',

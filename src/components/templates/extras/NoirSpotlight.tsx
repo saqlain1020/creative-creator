@@ -2,11 +2,16 @@ import type { CSSProperties } from 'react'
 import type { CreativeContent } from '../../../types'
 import { ImageSlot } from '../ImageSlot'
 
+function overlayOn(value: string) {
+  return value !== 'off'
+}
+
 export function NoirSpotlight({ content }: { content: CreativeContent }) {
   const c = content.colors
+  const showOverlay = overlayOn(content.website)
   return (
     <div
-      className="tpl tpl-noir"
+      className={`tpl tpl-noir${showOverlay ? '' : ' tpl-noir--no-overlay'}`}
       style={
         {
           '--bg': c.background,
